@@ -26,6 +26,8 @@ import javax.swing.Timer;
 
 public class Board extends JPanel implements ActionListener {
 
+    private int score;
+    
     private final int B_WIDTH = 300;
     private final int B_HEIGHT = 300;
     private final int DOT_SIZE = 10;
@@ -65,6 +67,7 @@ public class Board extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         loadImages();
         initGame();
+        
     }
 
     private void loadImages() {
@@ -89,7 +92,7 @@ public class Board extends JPanel implements ActionListener {
         }
         
         locateApple();
-
+        
         timer = new Timer(DELAY, this);
         timer.start();
     }
@@ -98,7 +101,7 @@ public class Board extends JPanel implements ActionListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        doDrawing(g);
+        doDrawing(g);      
     }
     
     private void doDrawing(Graphics g) {
@@ -124,8 +127,8 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void gameOver(Graphics g) {
-        
-        String msg = "Game Over";
+        score = score - 1;
+        String msg = "Game Over - You scored: " + score + " point(s)";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
@@ -141,6 +144,7 @@ public class Board extends JPanel implements ActionListener {
             dots++;
             locateApple();
         }
+        
     }
 
     private void move() {
@@ -195,6 +199,8 @@ public class Board extends JPanel implements ActionListener {
         if (!inGame) {
             timer.stop();
         }
+        
+        
     }
 
     private void locateApple() {
@@ -204,6 +210,8 @@ public class Board extends JPanel implements ActionListener {
 
         r = (int) (Math.random() * RAND_POS);
         apple_y = ((r * DOT_SIZE));
+        
+        score+=1;
     }
 
     @Override
@@ -217,6 +225,7 @@ public class Board extends JPanel implements ActionListener {
         }
 
         repaint();
+        
     }
 
     private class TAdapter extends KeyAdapter {
